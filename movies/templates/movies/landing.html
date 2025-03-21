@@ -1,1 +1,31 @@
 {% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <form method="get" >
+        <!-- El onchange es para que cuando el usuario selecione cualquiera de las opciones vuelva y mande un mensajeal servidor y se recargue -->
+        <select class="btn btn-primary dropdown-toggle" name="category" hx-get="{% url 'landing' %}" hx-target="#movie-container" hx-swap="innerHTML">
+            <option value="popular" {% if category == 'popular' %} selected {% endif %}>Popular</option>
+            <option value="now_playing" {% if category == 'now_playing' %} selected {% endif %}>Now Playing</option>
+            <option value="top_rated" {% if category == 'top_rated' %} selected {% endif %}>Top rated</option>
+            <option value="upcoming" {% if category == 'upcoming' %} selected {% endif %}>Upcoming</option>
+        </select>
+    </form>
+
+    <form method="get" hx-get="{% url 'landing' %}" hx-target="#movie-container" hx-swap="innerHTML" class="input-group mt-3 w-50 mt-2 mx-2" >
+        <input type="text" placeholder="Buscar películas" class="form-control" name="search" value="{{search_query}}">
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+        
+    </form>
+
+    <div id="movie-container" class="row mt-3"> 
+        {% include './partials/_movie_list.html'  %}
+    </div>  
+</div>
+
+
+
+
+{% endblock %}
